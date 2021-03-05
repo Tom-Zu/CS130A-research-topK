@@ -1,4 +1,4 @@
-# CS130A-research-topK
+# Tom Zu-research-topK-spacesaving
 top-K space saving algorithm achieved by linked list
 
 ## running program
