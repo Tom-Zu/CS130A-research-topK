@@ -3,6 +3,8 @@ Top-K space saving algorithm achieved by linked list
 
 Algorithm proposed in paper "Efficient Computation of Frequent and Top-k Elements in Data Streams"
 
+Link: http://www.cs.emory.edu/~cheung/Courses/584/Syllabus/papers/Frequency-count/2005-Metwally-Top-k-elements.pdf
+
 ## running program
 
 Put all data in a .txt file with name fname, one data per row.
