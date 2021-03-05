@@ -5,7 +5,7 @@ Algorithm proposed in paper "Efficient Computation of Frequent and Top-k Element
 
 ## running program
 
-Put all data in a .txt file, one data per row.
+Put all data in a .txt file with name fname, one data per row.
 
 Data format does not matter, they are all processed as strings.
 
