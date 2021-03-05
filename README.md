@@ -25,7 +25,9 @@ average runtime for space saving algorithm to process each item.
 
 
 ### Example output
-This is 100000 items ranging from 1 to 2^16 with zipd distribution. 
+This is 100000 items ranging from 1 to 2^16 with zipf distribution. 
+
+K=20, data included in data.txt
 
 ```
 ----------------------actual output:
