@@ -1,14 +1,15 @@
 # Tom Zu-research-topK-spacesaving
-top-K space saving algorithm achieved by linked list
-algorithm proposed in paper "Efficient Computation of Frequent and Top-k Elements in Data Streams"
+Top-K space saving algorithm achieved by linked list
+
+Algorithm proposed in paper "Efficient Computation of Frequent and Top-k Elements in Data Streams"
 
 ## running program
 
-put all data in a .txt file, one data per row.
+Put all data in a .txt file, one data per row.
 
-file name fname and number K are passed as command-line argument.
+File name fname and number K are passed as command-line argument.
 
-in terminal:
+In terminal:
 ```
 make all
 ./topK.out fanem K
@@ -16,13 +17,13 @@ make all
 
 ### Output includes
 
-sorted list of all items in space saving algorithm
+Sorted list of all items in space saving algorithm
 
-sorted list of all items by brute-force algorithm
+Sorted list of all items by brute-force algorithm
 
-average error and max error
+Average error and max error
 
-average runtime for space saving algorithm to process each item.
+Average runtime for space saving algorithm to process each item.
 
 
 ### Example output
