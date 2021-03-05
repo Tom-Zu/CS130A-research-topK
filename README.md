@@ -3,7 +3,7 @@ top-K space saving algorithm achieved by linked list
 
 ## running program
 
-put all data in a .txt file, one data per colum.
+put all data in a .txt file, one data per row.
 
 file name fname and number K are passed as command-line argument.
 
