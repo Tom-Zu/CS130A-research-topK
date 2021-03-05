@@ -7,6 +7,8 @@ Algorithm proposed in paper "Efficient Computation of Frequent and Top-k Element
 
 Put all data in a .txt file, one data per row.
 
+Data format does not matter, they are all processed as strings.
+
 File name fname and number K are passed as command-line argument.
 
 In terminal:
