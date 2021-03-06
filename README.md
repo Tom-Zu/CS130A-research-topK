@@ -23,7 +23,7 @@ $ ./topK.out fanem K
 
 ### Output includes
 
-Sorted list of top K most frequent items in space saving algorithm
+Sorted list of top K most frequent items by space saving algorithm
 
 Sorted list of top K most frequent items by brute-force algorithm
 
