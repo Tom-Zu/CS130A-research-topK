@@ -17,8 +17,8 @@ File name fname and number K are passed as command-line argument.
 
 In terminal:
 ```
-make all
-./topK.out fanem K
+$ make all
+$ ./topK.out fanem K
 ```
 
 ### Output includes
