@@ -232,10 +232,12 @@ void topK::brute_force(string fname)
     vector<pair<int, string>> expected;
     ifstream data (fname);
     string in;
+    total_element=0;
     if (data.is_open())
     {
         while (getline (data,in))
         {
+            total_element++;
             if(actual.find(in)==actual.end())
             {
                 actual[in]=1;
@@ -259,10 +261,10 @@ void topK::brute_force(string fname)
     {
         cout<<"Item: "<<expected[i].second<<" Weight: "<<expected[i].first<<endl;
     }
-    total_element=expected.size();
+    unique_element=expected.size();
 }
 
-void topK::analysis()
+void topK::analysis(int time_count)
 {
     double total_error=0;
     int miss_count=0;
@@ -282,10 +284,11 @@ void topK::analysis()
             max_error=max(max_error, error);
         }
     }
-    double avg_error=total_error/total_element;
+    double avg_error=total_error/unique_element;
     cout<<"-----------------------analysis:"<<endl;
     cout<<"avg error: "<<avg_error<<" max error: "<<max_error<<endl;
-    //cout<<miss_count<<endl;
+    double factor=1.0/total_element;
+    cout<<"Average time to process each item: "<< time_count*factor << " nanoseconds" << endl;
 }
 
 int main(int argc, char* argv[])
@@ -299,9 +302,8 @@ int main(int argc, char* argv[])
     auto start = high_resolution_clock::now(); 
     space_saving.readinput(fname);
     auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
+    auto duration = duration_cast<nanoseconds>(stop - start);
     space_saving.print();
     space_saving.brute_force(fname);
-    space_saving.analysis();
-    cout<<"Average time to process each item: "<< duration.count()/1000 << " nanoseconds" << endl;
+    space_saving.analysis(duration.count());
 }

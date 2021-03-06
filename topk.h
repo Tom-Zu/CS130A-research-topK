@@ -11,7 +11,8 @@ class topK {
         void readinput(std::string fname);                                  // read input from file and call private functions to construct data structure
         void print();                                                       // store result in vector for easy analysis
         void brute_force(std::string fname);                                // brute force algorithm to find expected output
-        void analysis();                                                    // function to calculate avg_error and max_error
+        void analysis(int time_count);                                      // function to calculate avg_error, max_error, and average runtime
+    
     private:
 
         struct bucket;
@@ -38,10 +39,11 @@ class topK {
         void append_child(bucket* b, Node *n);                              // append ID at the end of child list
         bool detach_Node(Node* n);                                          // detach Node from current child list, return 1 if bucket need to be deleted
         void remove_bucket(bucket* b);                                      // remove bucket
-        bucket* first_bucket;                                                      // pointer to first bucket
+        bucket* first_bucket;                                               // pointer to first bucket
         std::unordered_map<std::string, Node*> dictionary;                  // hash map for elements
         int k;                                                              // max element 
-        double total_element;                                                         //total number of unique elements
+        int unique_element;                                                 // number of unique elements
+        int total_element;                                                  // total number of elements
 };
 
 #endif
