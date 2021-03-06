@@ -21,7 +21,7 @@ topK::topK(int x)
     tmp->next=NULL;
     tmp->prev=NULL;
     tmp->child=NULL;
-    first=tmp;
+    first_bucket=tmp;
 }
 
 void topK::readinput(string fname)
@@ -41,10 +41,10 @@ void topK::readinput(string fname)
                 } 
                 else                                        //if dictionary is filled-up
                 { 
-                    dictionary.erase(first->child->ID);     // erase the min element from dictionary
+                    dictionary.erase(first_bucket->child->ID);     // erase the min element from dictionary
                     replace_min(in);                        // replace the min hit element with new element
-                    dictionary[in]=first->child;            // update dictionary for new element
-                    increment_count(first->child);          // increment count
+                    dictionary[in]=first_bucket->child;            // update dictionary for new element
+                    increment_count(first_bucket->child);          // increment count
                 } 
             } 
             else                                            // if element is present in dictionary
@@ -65,19 +65,19 @@ topK::Node* topK::initialize(string data)
     n->next=NULL;
     n->prev=NULL;
     n->parent=NULL;
-    if(this->first->value==1)
+    if(this->first_bucket->value==1)
     {
-        append_child(this->first, n);
+        append_child(this->first_bucket, n);
     }
     else
     {
         bucket* tmp=new bucket;
-        tmp->next=first;
-        first->prev=tmp;
+        tmp->next=first_bucket;
+        first_bucket->prev=tmp;
         tmp->prev=NULL;
         tmp->value=1;
-        first=tmp;
-        append_child(this->first, n);
+        first_bucket=tmp;
+        append_child(this->first_bucket, n);
     }
     return n;
 }
@@ -112,7 +112,7 @@ void topK::increment_count(Node* n)
     {
         if(n->parent->next->value==n->parent->value+1)      //if the right bucket's value is current +1
         {
-            int x=detach_Node(n);                           //detach node
+            bool x=detach_Node(n);                          //detach node
             append_child(n->parent->next, n);               //put it in the next bucket
             if(x==1)                                        //if preveious bucket is empty, delete it
             {
@@ -122,7 +122,7 @@ void topK::increment_count(Node* n)
         }
     }
                                                             //if the right bucket value is not current+1 or no right bucket exist
-    int x=detach_Node(n);                                   //detach node
+    bool x=detach_Node(n);                                  //detach node
     append_bucket(n->parent);                               //create new bucket
     append_child(n->parent->next, n);                       //put node in new bucket
     if(x==1)    
@@ -131,7 +131,7 @@ void topK::increment_count(Node* n)
     }
 }
 
-int topK::detach_Node(Node* n)
+bool topK::detach_Node(Node* n)
 {
     if(n->next&&n->prev)
     {
@@ -166,7 +166,7 @@ void topK::remove_bucket(bucket* b)
     else if(b->next)
     {
         b->next->prev=NULL;
-        first=b->next;
+        first_bucket=b->next;
         b->child=NULL;
         delete b;
     }
@@ -202,24 +202,22 @@ void topK::append_bucket(bucket* b)
 
 void topK::replace_min(string data)
 {
-    first->child->ID=data;
-    first->child->e=first->value;
+    first_bucket->child->ID=data;
+    first_bucket->child->e=first_bucket->value;
 }
 
 void topK::print()                                             
 {
-    bucket* temp1=first;
+    bucket* temp1=first_bucket;
+    vector<tuple<string, int, int>> result;
     while(temp1)
     {
-        //cout<<"ID with value of "<<temp1->value<<" : ";
         Node* temp2=temp1->child;
         while(temp2)
         {
-            //cout<<"ID: "<<temp2->ID<<" Value: "<<temp1->value<<" error margin: "<<temp2->e<<"\n";
             result.push_back(make_tuple(temp2->ID, temp1->value, temp2->e));
             temp2=temp2->next;
         }
-        //cout<<"\n";
         temp1=temp1->next;
     }
     cout<<"----------------------actual output:"<<endl;
@@ -231,40 +229,37 @@ void topK::print()
 
 void topK::brute_force(string fname)
 {
-    vector<pair<int,string>> vect;
+    vector<pair<int, string>> expected;
     ifstream data (fname);
     string in;
     if (data.is_open())
     {
         while (getline (data,in))
         {
-            bool found=0;
-            for(int i=0; i<vect.size(); i++)
+            if(actual.find(in)==actual.end())
             {
-                if(vect[i].second==in)
-                {
-                    vect[i].first++;
-                    found=1;
-                }
+                actual[in]=1;
             }
-            if(!found)
+            else
             {
-                vect.push_back(make_pair(1,in));
+                int temp=actual.at(in);
+                temp++;
+                actual.erase(in);
+                actual[in]=temp;
             }
         }
     }
-    sort(vect.begin(), vect.end());
+    for (auto& it : actual) 
+    { 
+        expected.push_back(make_pair(it.second, it.first)); 
+    } 
+    sort(expected.begin(), expected.end());
     cout<<"----------------------expected output: "<<endl;
-    for(int i=vect.size()-k; i<vect.size(); i++)
-    {
-        //cout<<"Item: "<<vect[i].second<<" Weight: "<<vect[i].first<<endl;
-        expected.push_back(vect[i]);
-    }
-    for(int i=k-1; i>=0; i--)
+    for(int i=expected.size()-1; i>=expected.size()-k; i--)
     {
         cout<<"Item: "<<expected[i].second<<" Weight: "<<expected[i].first<<endl;
     }
-    tot=vect.size();
+    total_element=expected.size();
 }
 
 void topK::analysis()
@@ -272,35 +267,22 @@ void topK::analysis()
     double total_error=0;
     int miss_count=0;
     int max_error=0;
-    for(int i=0; i<k; i++)
+
+    for(auto& it : actual)
     {
-        bool found=0;
-        int tmp=0;
-        for(int j=0; j<k; j++)
+        if(dictionary.find(it.first)==dictionary.end())
         {
-            if(get<0>(result[j])==get<1>(expected[i]))
-            {
-                found=1;
-                //cout<<"found"<<endl;
-                tmp=j;
-                j=k;
-            }
+            max_error=max(max_error, it.second);
+            total_error+=it.second;
         }
-        if(!found)
+        else
         {
-            total_error+=get<0>(expected[i]);
-            miss_count++;
-            max_error=max(max_error, get<0>(expected[i]));
-        }
-        if(found)
-        {
-            int error=abs(get<0>(expected[i])-get<1>(result[tmp]));
-            //cout<<error<<endl;
+            int error=abs(it.second-dictionary.at(it.first)->parent->value);
             total_error+=error;
             max_error=max(max_error, error);
         }
     }
-    double avg_error=total_error/tot;
+    double avg_error=total_error/total_element;
     cout<<"-----------------------analysis:"<<endl;
     cout<<"avg error: "<<avg_error<<" max error: "<<max_error<<endl;
     //cout<<miss_count<<endl;
