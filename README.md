@@ -35,10 +35,11 @@ Reading from file "data_zipf_2.0_2^16_100000.txt", with K=20
 
 Here the file name specifies that it is a zipf distribution with a skew of 2.0, range from 1 to 2^16, 100000 items generated
 
+Argument:
 ```
 $ ./topk.out data_zipf_2.0_2^16_100000.txt 20
 ```
-
+Output:
 ```
 ----------------------actual output:
 Item: 1 Weight: 60797 error margin: 0
