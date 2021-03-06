@@ -45,6 +45,7 @@ $ ./topk.out data_zipf_2.0_2^16_100000.txt 20
 Output:
 ```
 ----------------------actual output:
+----------------------actual output:
 Item: 1 Weight: 60797 error margin: 0
 Item: 2 Weight: 15103 error margin: 0
 Item: 3 Weight: 6804 error margin: 0
@@ -88,5 +89,5 @@ Item: 20 Weight: 171
 Item: 19 Weight: 164
 -----------------------analysis:
 avg error: 16.5916 max error: 583
-Average time to process each item: 34 nanoseconds
+Average time to process each item: 341.382 nanoseconds
 ```
