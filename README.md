@@ -31,9 +31,13 @@ Average runtime for space saving algorithm to process each item.
 
 
 ### Example output
-This is 100000 items ranging from 1 to 2^16 with zipf distribution. 
+Reading from file "data_zipf_2.0_2^16_100000.txt", with K=20
 
-K=20, data included in data.txt
+Here the file name specifies that it is a zipf distribution with a skew of 2.0, range from 1 to 2^16, 100000 items generated
+
+```
+$ ./topk.out data_zipf_2.0_2^16_100000.txt 20
+```
 
 ```
 ----------------------actual output:
@@ -79,6 +83,5 @@ Item: 18 Weight: 189
 Item: 20 Weight: 171
 Item: 19 Weight: 164
 -----------------------analysis:
-avg error: 5.72627 max error: 420
-Average time to process each item: 37 nanoseconds
+avg error: 16.5916 max error: 583
 ```
