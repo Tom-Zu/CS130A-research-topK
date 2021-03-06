@@ -45,7 +45,6 @@ $ ./topk.out data_zipf_2.0_2^16_100000.txt 20
 Output:
 ```
 ----------------------actual output:
-----------------------actual output:
 Item: 1 Weight: 60797 error margin: 0
 Item: 2 Weight: 15103 error margin: 0
 Item: 3 Weight: 6804 error margin: 0
