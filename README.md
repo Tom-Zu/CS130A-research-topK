@@ -37,6 +37,7 @@ Here the file name specifies that it is a zipf distribution with a skew of 2.0, 
 
 Argument:
 ```
+$ make all
 $ ./topk.out data_zipf_2.0_2^16_100000.txt 20
 ```
 Output:
