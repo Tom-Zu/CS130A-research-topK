@@ -31,7 +31,7 @@ Average runtime for space saving algorithm to process each item.
 
 
 ### Example output
-Reading from file "data_zipf_2.0_2^16_100000.txt", with K=20
+Reading from file "data_zipf_2.0_2^16_100000.txt" (included in repository), with K=20
 
 Here the file name specifies that it is a zipf distribution with a skew of 2.0, range from 1 to 2^16, 100000 items generated
 
