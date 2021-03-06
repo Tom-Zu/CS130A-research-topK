@@ -1,7 +1,7 @@
 # Tom Zu-research-topK-spacesaving
 Top-K space saving algorithm achieved by linked list
 
-Work done in 2021/3/3-2021/3/5
+Work done during 2021/3/4-2021/3/5
 
 Algorithm proposed in paper "Efficient Computation of Frequent and Top-k Elements in Data Streams"
 
