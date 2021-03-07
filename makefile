@@ -1,6 +1,6 @@
 all: topk.out
 
-topk.out: topk.h topk.cpp
+topk.out: topk.cpp
 	g++ -std=c++11 $^ -o $@
 
 clean:
