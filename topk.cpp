@@ -24,36 +24,53 @@ topK::topK(int x)
     first_bucket=tmp;
 }
 
-void topK::readinput(string fname)
+double topK::readinput(string fname)
 {
+    vector<string> input;
     ifstream data (fname);
     string in;
     if (data.is_open())
     {
         while (getline (data,in))
         {
-            if(dictionary.find(in)==dictionary.end())       // element not present in dictionary
-            { 
-                if(dictionary.size()<k)                     // if dictionary is not filled-up
-                { 
-                    Node *n=initialize(in);                 // create new Nodes and insert into bucket 1
-                    dictionary[in]= n;                      // update dictionary
-                } 
-                else                                        //if dictionary is filled-up
-                { 
-                    dictionary.erase(first_bucket->child->ID);     // erase the min element from dictionary
-                    replace_min(in);                        // replace the min hit element with new element
-                    dictionary[in]=first_bucket->child;            // update dictionary for new element
-                    increment_count(first_bucket->child);          // increment count
-                } 
-            } 
-            else                                            // if element is present in dictionary
-            { 
-                Node* n=dictionary.at(in);                  // get node pointer
-                increment_count(n);                         // increment count
-                //cout<<n->parent->value<<endl;
-            }
+            input.push_back(in);
         }
+    }
+    int total_time=0;
+    for (int i=0; i<input.size(); i++)
+    {
+        auto start = high_resolution_clock::now();
+        space_saving(input[i]);
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<nanoseconds>(stop - start);
+        total_time+=duration.count();
+        cout<<duration.count()<<endl;
+    }
+    return total_time/input.size();
+}
+
+void topK::space_saving(string in)
+{
+    if(dictionary.find(in)==dictionary.end())       // element not present in dictionary
+    { 
+        if(dictionary.size()<k)                     // if dictionary is not filled-up
+        { 
+            Node *n=initialize(in);                 // create new Nodes and insert into bucket 1
+            dictionary[in]= n;                      // update dictionary
+        } 
+        else                                        //if dictionary is filled-up
+        { 
+            dictionary.erase(first_bucket->child->ID);     // erase the min element from dictionary
+            replace_min(in);                        // replace the min hit element with new element
+            dictionary[in]=first_bucket->child;            // update dictionary for new element
+            increment_count(first_bucket->child);          // increment count
+        } 
+    } 
+    else                                            // if element is present in dictionary
+    { 
+        Node* n=dictionary.at(in);                  // get node pointer
+        increment_count(n);                         // increment count
+        //cout<<n->parent->value<<endl;
     }
 }
 
@@ -264,7 +281,7 @@ void topK::brute_force(string fname)
     unique_element=expected.size();
 }
 
-void topK::analysis(int time_count)
+void topK::analysis()
 {
     double total_error=0;
     int miss_count=0;
@@ -287,8 +304,6 @@ void topK::analysis(int time_count)
     double avg_error=total_error/unique_element;
     cout<<"-----------------------analysis:"<<endl;
     cout<<"avg error: "<<avg_error<<" max error: "<<max_error<<endl;
-    double factor=1.0/total_element;
-    cout<<"Average time to process each item: "<< time_count*factor << " nanoseconds" << endl;
 }
 
 int main(int argc, char* argv[])
@@ -299,11 +314,9 @@ int main(int argc, char* argv[])
     stringstream ss(temp);
     ss>>x;
     topK space_saving{x};
-    auto start = high_resolution_clock::now(); 
-    space_saving.readinput(fname);
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<nanoseconds>(stop - start);
+    double avg_time=space_saving.readinput(fname);
     space_saving.print();
     space_saving.brute_force(fname);
-    space_saving.analysis(duration.count());
+    space_saving.analysis();
+    cout<<"Average time to process each item is: "<<avg_time<<" nanoseconds."<<endl;
 }

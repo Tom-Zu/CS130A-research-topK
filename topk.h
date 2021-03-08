@@ -8,10 +8,10 @@ class topK {
 
     public:
         topK(int k);                                                        // constructor
-        void readinput(std::string fname);                                  // read input from file and call private functions to construct data structure
+        double readinput(std::string fname);                                // read input from file, return avg process time
         void print();                                                       // store result in vector for easy analysis
         void brute_force(std::string fname);                                // brute force algorithm to find expected output
-        void analysis(int time_count);                                      // function to calculate avg_error, max_error, and average runtime
+        void analysis();                                                    // function to calculate avg_error and max_error
     
     private:
 
@@ -33,6 +33,7 @@ class topK {
         };
         std::unordered_map<std::string, int> actual;                        // container for expected result
         Node* initialize(std::string data);                                 // initialize Node when dictionary is not filled-up
+        void space_saving(std::string in);                                       // main logic for space saving algorithm
         void replace_min(std::string data);                                 // replace min hit element with new element
         void increment_count(Node* n);                                      // increment count of ID
         void append_bucket(bucket* b);                                      // append value at end of bucket list
