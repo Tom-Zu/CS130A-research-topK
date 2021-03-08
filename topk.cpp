@@ -42,11 +42,10 @@ double topK::readinput(string fname)
         auto start = high_resolution_clock::now();
         space_saving(input[i]);
         auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<nanoseconds>(stop - start);
+        auto duration = duration_cast<microseconds>(stop - start);
         total_time+=duration.count();
-        cout<<duration.count()<<endl;
     }
-    return total_time/input.size();
+    return 1000.0*total_time/input.size();
 }
 
 void topK::space_saving(string in)
