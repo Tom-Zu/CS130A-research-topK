@@ -36,16 +36,14 @@ double topK::readinput(string fname)
             input.push_back(in);
         }
     }
-    int total_time=0;
+    auto start = high_resolution_clock::now();
     for (int i=0; i<input.size(); i++)
     {
-        auto start = high_resolution_clock::now();
         space_saving(input[i]);
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        total_time+=duration.count();
     }
-    return 1000.0*total_time/input.size();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<nanoseconds>(stop - start);
+    return 1.0*duration.count()/input.size();
 }
 
 void topK::space_saving(string in)
