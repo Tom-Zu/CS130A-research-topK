@@ -89,5 +89,5 @@ Item: 20 Weight: 171
 Item: 19 Weight: 164
 -----------------------analysis:
 avg error: 16.5916 max error: 583
-Average time to process each item is: 3.42 nanoseconds.
+Average time to process each item is: 302 nanoseconds.
 ```
